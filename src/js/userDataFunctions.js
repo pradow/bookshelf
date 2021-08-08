@@ -6,7 +6,7 @@ const userDataFunctions = (function () {
   if (!localStorage.hasOwnProperty("bookshelfApp")) {
     updateLocalStorage();
   } else {
-    userData = JSON.parse(localStorage.getItem("bookshelf"));
+    userData = JSON.parse(localStorage.getItem("bookshelfApp"));
   }
 
   function updateLocalStorage() {
@@ -15,14 +15,9 @@ const userDataFunctions = (function () {
   }
 
   function addBook(bookInfo) {
-    alert(bookInfo);
-  }
+    userData = { ...userData, booksData: [...userData.booksData, bookInfo] };
 
-  function removeBook(bookId) {
-    const newBooksData = userData.booksdata.filter(
-      (item) => item.id !== bookId
-    );
-    userData = { ...userData, booksData: newBooksData };
+    console.log(userData);
 
     updateLocalStorage();
   }
