@@ -1,8 +1,17 @@
 const results = (function () {
   if (document.querySelector(".js-search-results")) {
     const searchResultsContainer = document.querySelector(".js-search-results");
+    const userData = userDataFunctions.userData;
 
+    function updateButton(buttonClicked, isAdding) {
+      if (isAdding) {
+        buttonClicked.innerText = "Remove from bookshelf";
+      } else {
+        buttonClicked.innerText = "Add to bookshelf";
+      }
+    }
     function emitAddBook(e) {
+      const buttonClicked = e.currentTarget;
       const parentEl = e.currentTarget.parentNode;
       const bookInfo = {
         id: parentEl.dataset.bookid,
@@ -10,6 +19,8 @@ const results = (function () {
         author: parentEl.dataset.bookauthor,
         cover: parentEl.dataset.bookcover,
       };
+
+      updateButton(buttonClicked, true);
 
       events.emit("addBook", bookInfo);
     }
@@ -24,7 +35,11 @@ const results = (function () {
         }" data-bookcover="${
           item.cover_edition_key ? item.cover_edition_key : "default.jpg"
         }"><h3 class='book-title'>${item.title}</h3>
-        <button class="js-addRemovebook">add to bookshelf</button>
+        <button class="js-addRemovebook">${
+          userData.bookIdArr.includes(item.key.slice(7))
+            ? "remove from bookshelf"
+            : "add to bookshelf"
+        }</button>
         </div>`;
       });
 
