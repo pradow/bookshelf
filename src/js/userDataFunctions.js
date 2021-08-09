@@ -1,5 +1,6 @@
 const userDataFunctions = (function () {
   let userData = {
+    bookIdArr: [],
     booksData: [],
   };
 
@@ -15,7 +16,11 @@ const userDataFunctions = (function () {
   }
 
   function addBook(bookInfo) {
-    userData = { ...userData, booksData: [...userData.booksData, bookInfo] };
+    userData = {
+      ...userData,
+      bookIdArr: [...userData.bookIdArr, bookInfo.id],
+      booksData: [...userData.booksData, bookInfo],
+    };
 
     console.log(userData);
 
@@ -23,5 +28,8 @@ const userDataFunctions = (function () {
   }
 
   events.on("addBook", addBook);
-  events.on("removeBook", removeBook);
+
+  return {
+    userData,
+  };
 })();
