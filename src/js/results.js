@@ -10,6 +10,16 @@ const results = (function () {
         buttonClicked.innerText = "Add to bookshelf";
       }
     }
+
+    function emitRemoveBook(e) {
+      const buttonClicked = e.currentTarget;
+      const parentEl = e.currentTarget.parentNode;
+
+      updateButton(buttonClicked, false);
+
+      events.emit("removeBook", parentEl.dataset.bookid);
+    }
+
     function emitAddBook(e) {
       const buttonClicked = e.currentTarget;
       const parentEl = e.currentTarget.parentNode;
@@ -35,11 +45,11 @@ const results = (function () {
         }" data-bookcover="${
           item.cover_edition_key ? item.cover_edition_key : "default.jpg"
         }"><h3 class='book-title'>${item.title}</h3>
-        <button class="js-addRemovebook">${
+        ${
           userData.bookIdArr.includes(item.key.slice(7))
-            ? "remove from bookshelf"
-            : "add to bookshelf"
-        }</button>
+            ? `<button class="js-addRemovebook remove-button">Remove from bookshelf</button>`
+            : `<button class="js-addRemovebook add-button">Add to bookshelf</button>`
+        }
         </div>`;
       });
 
@@ -49,9 +59,13 @@ const results = (function () {
         .querySelectorAll(".book-title")
         .forEach((item) => item.addEventListener("click", emitAddBook));
 
-      document
-        .querySelectorAll(".js-addRemovebook")
-        .forEach((item) => item.addEventListener("click", emitAddBook));
+      document.querySelectorAll(".js-addRemovebook").forEach((item) => {
+        if (item.classList.contains("add-button")) {
+          item.addEventListener("click", emitAddBook);
+        } else {
+          item.addEventListener("click", emitRemoveBook);
+        }
+      });
     }
 
     events.on("searchDataChange", populateData);
