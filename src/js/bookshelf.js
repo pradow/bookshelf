@@ -2,7 +2,7 @@ const bookshelf = (function () {
   if (document.querySelector(".js-results")) {
     const bookshelfContainer = document.querySelector(".js-results");
     const bookshelfLink = document.querySelector(".js-bookshelf-link");
-    const userData = userDataFunctions.userData;
+    let userData = userDataFunctions.userData;
 
     function removeElement(elementClicked) {
       bookshelfContainer.removeChild(elementClicked.parentNode);
@@ -18,7 +18,12 @@ const bookshelf = (function () {
     }
 
     function populateData(data) {
-      let htmlToAppend;
+      let htmlToAppend = "";
+
+      if (data.length <= 0) {
+        bookshelfContainer.innerHTML = `<p>Your bookshelf is empty`;
+        return;
+      }
       data.forEach((item) => {
         htmlToAppend += `<div class='single-book' data-bookid="${item.id}"><h3 class='book-title'>${item.title}</h3>
         <button class="js-addRemovebook remove-button">Remove from bookshelf</button>
@@ -35,5 +40,11 @@ const bookshelf = (function () {
       e.preventDefault();
       populateData(userData.booksData);
     });
+
+    function updateUserData(data) {
+      userData = data;
+    }
+
+    events.on("userDataChange", updateUserData);
   }
 })();
