@@ -1,5 +1,6 @@
 const results = (function () {
   if (document.querySelector(".js-results")) {
+    const body = document.querySelector("body");
     const resultsContainer = document.querySelector(".js-results");
     let userData = userDataFunctions.userData;
 
@@ -61,6 +62,8 @@ const results = (function () {
           item.addEventListener("click", emitRemoveBook);
         }
       });
+
+      search.pageStateChange("results");
     }
 
     function createBookEl(item) {

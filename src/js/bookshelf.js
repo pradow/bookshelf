@@ -1,5 +1,6 @@
 const bookshelf = (function () {
   if (document.querySelector(".js-results")) {
+    const body = document.querySelector("body");
     const bookshelfContainer = document.querySelector(".js-results");
     const bookshelfLink = document.querySelector(".js-bookshelf-link");
     let userData = userDataFunctions.userData;
@@ -30,6 +31,7 @@ const bookshelf = (function () {
       document.querySelectorAll(".js-addRemovebook").forEach((item) => {
         item.addEventListener("click", emitRemoveBook);
       });
+      search.pageStateChange("bookshelf");
     }
     bookshelfLink.addEventListener("click", (e) => {
       e.preventDefault();
