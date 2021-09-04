@@ -32,6 +32,12 @@ const search = (function () {
 
     function pageStateChange(page) {
       const pagesArray = ["home", "search", "results", "bookshelf"];
+
+      if (page === "search") {
+        body.classList.add("search");
+        return;
+      }
+
       pagesArray.forEach((item) => {
         if (item !== page) {
           body.classList.remove(item);
