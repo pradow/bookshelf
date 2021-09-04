@@ -1,11 +1,12 @@
 .hero-area {
-  display: none;
+  display: block;
+  min-height: 100vh;
   background-color: $orange;
 }
 
-.home .hero-area {
-  display: block;
-  min-height: 100vh;
+.results .hero-area,
+.bookshelf .hero-area {
+  display: none;
 }
 
 .hero-area-inner {
