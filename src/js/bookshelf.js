@@ -10,8 +10,6 @@ const bookshelf = (function () {
       const parentEl =
         buttonClicked.parentNode.parentNode.parentNode.parentNode;
 
-      console.log(parentEl);
-
       bookshelfArea.removeChild(parentEl);
 
       events.emit(
